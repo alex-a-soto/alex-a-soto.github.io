@@ -1,0 +1,292 @@
+<!DOCTYPE html><html><head><meta content="text/html; charset=utf-8" http-equiv="Content-Type" /><meta content="width=device-width, initial-scale=1" name="viewport" /><!--replace-start-0--><!--replace-start-5--><!--replace-start-8--><title>Challenges Building an Open-Source E Ink Laptop - alexsoto.dev</title><!--replace-end-8--><!--replace-end-5--><!--replace-end-0--><link href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.7/dist/semantic.min.css" rel="stylesheet" /><link href="https://fonts.googleapis.com/css?family=Merriweather|Libre+Franklin|Roboto+Mono&amp;display=swap" rel="stylesheet" /><!--replace-start-1--><!--replace-start-4--><!--replace-start-7--><style>
+  html {
+  font-size: 15px !important;
+  }
+
+body div.zettel-view .zettel-content h1 {
+    text-align: right !important;
+  background-color: inherit !important;
+  font-weight: 400 !important;
+  line-height: 1 !important;
+}
+
+body div.zettel-view .zettel-content h2 {
+    text-align: left !important;
+  background-color: inherit !important;
+  border-bottom: none !important;
+  font-style: italic !important;
+  font-weight: 400 !important;
+  line-height: 1 !important;
+}
+
+
+body div.zettel-view .zettel-content h3 {
+  font-style: italic !important;
+  font-weight: 400 !important;
+  line-height: 1 !important;
+  text-align: left !important;
+  background-color: inherit !important;
+}
+
+body div.zettel-view .zettel-content h4 {
+    border-bottom: none !important;
+    text-align: left !important;
+  background-color: inherit !important;
+}
+
+
+
+/* Title */
+#zettel-container > div.zettel-view > article > h1:first-child {
+  /* text-align: center !important; */
+  /* font-family: "Crimson Text", serif !important; */
+  /* font-style: italic; */
+    text-align: right !important;
+  font-weight: normal !important;
+  font-size: 2rem !important;
+  padding: 1rem !important;
+  text-align: right !important;
+  /* padding-top: 1rem; */
+  /* padding-right: 1rem; */
+  /* padding-left: 1rem; */
+  background-color: inherit !important;
+}
+
+
+.ui.segment {
+    background-color: #fffff8 !important;
+}
+
+
+#zettel-container {
+    max-width: 800px !important;
+}
+
+</style>
+
+<!-- add social share buttons  -->
+<script>
+  window.addEventListener("load", function(){
+      var socialButtons = document.getElementById("socialMediaLinks");
+
+      socialButtons.innerHTML +=
+          "<a id='facebook' title='Share on Facebook' class='ui facebook button'><i class='facebook icon'></i> Share</a><a id='twitter' title='Tweet' class='ui twitter button'><i class='twitter icon'></i> Tweet</a><a id='linkedin' title='Share on LinkedIn' class='ui linkedin button'><i class='linkedin icon'></i> Share</a><a id='reddit' title='Share on Reddit' class='ui reddit button'><i class='reddit icon'></i> Share</a><a id='hnews' title='Share on Hacker News' class='ui hacker news button'><i class='hacker news icon'></i> Share</a>"
+
+
+
+
+      document.getElementById("facebook").addEventListener("click", function(e) {
+          window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(document.URL) + '&quote=' + encodeURIComponent(document.URL)); return false;
+      });
+
+      document.getElementById("twitter").addEventListener("click", function(e) {
+          window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(document.title) + ':%20' + encodeURIComponent(document.URL)); return false;
+      });
+
+      document.getElementById("linkedin").addEventListener("click", function(e) {
+          window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(document.URL) + '&title=' +  encodeURIComponent(document.title)); return false;
+      });
+
+      document.getElementById("reddit").addEventListener("click", function(e) {
+          window.open('https://www.reddit.com/submit?url=' + encodeURIComponent(document.URL) + '&title=' +  encodeURIComponent(document.title)); return false;
+      });
+
+      document.getElementById("hnews").addEventListener("click", function(e) {
+          window.open('https://news.ycombinator.com/submitlink?u=' + encodeURIComponent(document.URL) + '&t=' + encodeURIComponent(document.title)); return false;
+      });
+
+      document.getElementById("rss").addEventListener("click", function(e) {
+          window.open('https://alexsoto.dev/blog.xml');
+      });
+
+
+
+  })
+  </script>
+
+<script>
+  window.addEventListener("load", function(){
+      var socialButtons = document.getElementById("subscriptionLinks");
+
+      socialButtons.innerHTML +=
+          "<a id='rss' title='Subscribe to RSS feed' class='ui rss button'><i class='rss square icon'></i> RSS</a> <a id='mail' title='Subscribe to mailing list' class='ui paper plane button'><i class='paper plane icon'></i> Subscribe</a>"
+
+      document.getElementById("rss").addEventListener("click", function(e) {
+          window.open('https://alexsoto.dev/blog.xml');
+      });
+
+      document.getElementById("mail").addEventListener("click", function(e) {
+          window.open('https://buttondown.email/alexsotodev');
+      });
+
+  })
+  </script>
+
+
+<style>
+#socialMediaLinks {
+    text-align: center;
+}
+
+#socialMediaLinks .ui.reddit.button {
+    background: #FF5700;
+    color: #ffffff;
+}
+
+#socialMediaLinks .ui.hacker.news.button {
+    background: #ff4000;
+    color: #ffffff;
+}
+
+#socialMediaLinks .ui.rss.button {
+    background: #FF9249;
+    color: #ffffff;
+}
+
+#subscriptionLinks .ui.rss.button {
+    background: #FF9249;
+    color: #ffffff;
+}
+
+#subscriptionLinks {
+    text-align: center;
+
+}
+
+#subscriptionLinks .ui.paper.plane.button {
+    background: #5A90E0;
+    color: #ffffff;
+}
+
+</style>
+
+
+
+
+<!-- replace logo  -->
+<script>
+window.addEventListener("load", function(){
+  let element = document.querySelector('div.footer-version > div > a > img[alt="logo"]')
+  let parent = element.parentNode.parentNode.parentNode
+  // element.remove()
+  console.log(parent)
+
+  let p = document.createElement("p")
+  let n = document.createTextNode("© 2021 Alexander Soto")
+  p.appendChild(n)
+  p.style.height = "80px";
+  // parent.appendChild(n)
+  parent.replaceChild(p, parent.firstChild)
+  // parent.replaceChild(element.parentNode, p)
+});
+</script>
+
+
+
+<!-- mermaidjs -->
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>window.addEventListener("load", mermaid.initialize({startOnLoad:true}))</script>
+
+<!-- graphviz -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/viz.js/2.1.2/viz.js" integrity="sha512-vnRdmX8ZxbU+IhA2gLhZqXkX1neJISG10xy0iP0WauuClu3AIMknxyDjYHEpEhi8fTZPyOCWgqUCnEafDB/jVQ==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/viz.js/2.1.2/full.render.js" integrity="sha512-1zKK2bG3QY2JaUPpfHZDUMe3dwBwFdCDwXQ01GrKSd+/l0hqPbF+aak66zYPUZtn+o2JYi1mjXAqy5mW04v3iA==" crossorigin="anonymous"></script>
+<script>
+window.addEventListener("load", function(){
+  let viz = new Viz();
+  for (let element of document.getElementsByClassName("graphviz")) {
+    let parent = element.parentNode
+    let pparent = parent.parentNode
+    viz.renderSVGElement(element.textContent)
+    .then(function(element) {
+      element.setAttribute("width", "100%")
+      pparent.replaceChild(element, parent)
+    });
+  }
+});
+</script>
+
+<!-- chartjs -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.bundle.min.js" integrity="sha512-SuxO9djzjML6b9w9/I07IWnLnQhgyYVSpHZx0JV97kGBfTIsUYlWflyuW4ypnvhBrslz1yJ3R+S14fdCWmSmSA==" crossorigin="anonymous"></script>
+<script>
+window.addEventListener("load", function(){
+  for (let element of document.getElementsByClassName("chartjs")) {
+    let parent = element.parentNode
+    let pparent = parent.parentNode
+    let canvas = document.createElement('canvas');
+    let box = document.createElement('div');
+    box.appendChild(canvas);
+    let ctx = canvas.getContext("2d")
+    let myChart = new Chart(ctx, JSON.parse(element.textContent));
+    box.setAttribute("style","display:block;width:75%;text-align:'center';margin: 5px auto;");
+    pparent.replaceChild(box, parent)
+  }
+});
+</script>
+
+<script defer src="https://cdn.commento.io/js/commento.js"></script>
+
+<script async defer src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
+<noscript><img src="https://queue.simpleanalyticscdn.com/noscript.gif" alt=""/></noscript>
+
+<!-- Calendly badge widget begin -->
+<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+<script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
+<script type="text/javascript">window.onload = function() { Calendly.initBadgeWidget({ url: 'https://calendly.com/rc-alex-s/open-office', text: 'Schedule time with me', color: '#00a2ff', textColor: '#ffffff', branding: true }); }</script>
+<!-- Calendly badge widget end -->
+<link href="https://raw.githubusercontent.com/srid/neuron/master/assets/neuron.svg" rel="icon" /><meta content="Alexander Soto" name="author" /><meta content="In a previous article, I discussed my intention of building-an-e-ink-laptop. In this article, I want to introduce EI2030 and how we are building an open-source eink laptop and its challenges." name="description" /><link href="https://alexsoto.dev/challenges-building-an-eink-laptop.html" rel="canonical" /><meta content="Challenges Building an Open-Source E Ink Laptop" property="og:title" /><meta content="alexsoto.dev" property="og:site_name" /><meta content="article" property="og:type" /><meta content="https://alexsoto.dev/static/profile.jpeg" property="og:image" /><script type="application/ld+json">[]</script><style type="text/css">body{background-color:#eeeeee !important;font-family:"Libre Franklin", serif !important}body .ui.container{font-family:"Libre Franklin", serif !important}body h1, h2, h3, h4, h5, h6, .ui.header, .headerFont{font-family:"Merriweather", sans-serif !important}body code, pre, tt, .monoFont{font-family:"Roboto Mono","SFMono-Regular","Menlo","Monaco","Consolas","Liberation Mono","Courier New", monospace !important}body div.z-index p.info{color:#808080}body div.z-index ul{list-style-type:square;padding-left:1.5em}body div.z-index .uplinks{margin-left:0.29999em}body .zettel-content h1#title-h1{background-color:rgba(27,28,29,0.1)}body nav.bottomPane{background-color:rgba(27,28,29,2.0e-2)}body div#footnotes{border-top-color:#1b1c1d}body p{line-height:150%}body img{max-width:100%}body .deemphasized{font-size:0.94999em}body .deemphasized:hover{opacity:1}body .deemphasized:not(:hover){opacity:0.69999}body .deemphasized:not(:hover) a{color:#808080 !important}body div.container.universe{padding-top:1em}body div.zettel-view ul{padding-left:1.5em;list-style-type:square}body div.zettel-view .pandoc .highlight{background-color:#ffff00}body div.zettel-view .pandoc .ui.disabled.fitted.checkbox{margin-right:0.29999em;vertical-align:middle}body div.zettel-view .zettel-content .metadata{margin-top:1em}body div.zettel-view .zettel-content .metadata div.date{text-align:center;color:#808080}body div.zettel-view .zettel-content h1{padding-top:0.2em;padding-bottom:0.2em;text-align:center}body div.zettel-view .zettel-content h2{border-bottom:solid 1px #4682b4;margin-bottom:0.5em}body div.zettel-view .zettel-content h3{margin:0px 0px 0.4em 0px}body div.zettel-view .zettel-content h4{opacity:0.8}body div.zettel-view .zettel-content div#footnotes{margin-top:4em;border-top-style:groove;border-top-width:2px;font-size:0.9em}body div.zettel-view .zettel-content div#footnotes ol > li > p:only-of-type{display:inline;margin-right:0.5em}body div.zettel-view .zettel-content aside.footnote-inline{width:30%;padding-left:15px;margin-left:15px;float:right;background-color:#d3d3d3}body div.zettel-view .zettel-content .overflows{overflow:auto}body div.zettel-view .zettel-content code{margin:auto auto auto auto;font-size:100%}body div.zettel-view .zettel-content p code, li code, ol code{padding:0.2em 0.2em 0.2em 0.2em;background-color:#f5f2f0}body div.zettel-view .zettel-content pre{overflow:auto}body div.zettel-view .zettel-content dl dt{font-weight:bold}body div.zettel-view .zettel-content blockquote{background-color:#f9f9f9;border-left:solid 10px #cccccc;margin:1.5em 0px 1.5em 0px;padding:0.5em 10px 0.5em 10px}body div.zettel-view .zettel-content.raw{background-color:#dddddd}body .ui.label.zettel-tag{color:#000000}body .ui.label.zettel-tag a{color:#000000}body nav.bottomPane ul.backlinks > li{padding-bottom:0.4em;list-style-type:disc}body nav.bottomPane ul.context-list > li{list-style-type:lower-roman}body .footer-version img{-webkit-filter:grayscale(100%);-moz-filter:grayscale(100%);-ms-filter:grayscale(100%);-o-filter:grayscale(100%);filter:grayscale(100%)}body .footer-version img:hover{-webkit-filter:grayscale(0%);-moz-filter:grayscale(0%);-ms-filter:grayscale(0%);-o-filter:grayscale(0%);filter:grayscale(0%)}body .footer-version, .footer-version a, .footer-version a:visited{color:#808080}body .footer-version a{font-weight:bold}body .footer-version{margin-top:1em !important;font-size:0.69999em}@media only screen and (max-width: 768px){body div#zettel-container{margin-left:0.4em !important;margin-right:0.4em !important}}body span.zettel-link-container span.zettel-link a{color:#1b1c1d;font-weight:bold;text-decoration:none}body span.zettel-link-container span.zettel-link a:hover{background-color:rgba(27,28,29,0.1)}body span.zettel-link-container span.extra{color:auto}body span.zettel-link-container.errors{border:solid 1px #ff0000}body span.zettel-link-container.errors span.zettel-link a:hover{text-decoration:none !important;cursor:not-allowed}body [data-tooltip]:after{font-size:0.69999em}body div.tag-tree div.node{font-weight:bold}body div.tag-tree div.node a.inactive{color:#555555}body .tree.flipped{-webkit-transform:rotate(180deg);-moz-transform:rotate(180deg);-ms-transform:rotate(180deg);-o-transform:rotate(180deg);transform:rotate(180deg)}body .tree{overflow:auto}body .tree ul.root{padding-top:0px;margin-top:0px}body .tree ul{position:relative;padding:1em 0px 0px 0px;white-space:nowrap;margin:0px auto 0px auto;text-align:center}body .tree ul::after{content:"";display:table;clear:both}body .tree ul:last-child{padding-bottom:0.1em}body .tree li{display:inline-block;vertical-align:top;text-align:center;list-style-type:none;position:relative;padding:1em 0.5em 0em 0.5em}body .tree li::before{content:"";position:absolute;top:0px;right:50%;border-top:solid 2px #cccccc;width:50%;height:1.19999em}body .tree li::after{content:"";position:absolute;top:0px;right:50%;border-top:solid 2px #cccccc;width:50%;height:1.19999em}body .tree li::after{right:auto;left:50%;border-left:solid 2px #cccccc}body .tree li:only-child{padding-top:0em}body .tree li:only-child::after{display:none}body .tree li:only-child::before{display:none}body .tree li:first-child::before{border-style:none;border-width:0px}body .tree li:first-child::after{border-radius:5px 0px 0px 0px}body .tree li:last-child::after{border-style:none;border-width:0px}body .tree li:last-child::before{border-right:solid 2px #cccccc;border-radius:0px 5px 0px 0px}body .tree ul ul::before{content:"";position:absolute;top:0px;left:50%;border-left:solid 2px #cccccc;width:0px;height:1.19999em}body .tree li div.forest-link{border:solid 2px #cccccc;padding:0.2em 0.29999em 0.2em 0.29999em;text-decoration:none;display:inline-block;border-radius:5px 5px 5px 5px;color:#333333;position:relative;top:2px}body .tree.flipped li div.forest-link{-webkit-transform:rotate(180deg);-moz-transform:rotate(180deg);-ms-transform:rotate(180deg);-o-transform:rotate(180deg);transform:rotate(180deg)}</style><!--replace-end-7--><!--replace-end-4--><!--replace-end-1--></head><body><div class="ui fluid container universe"><!--replace-start-2--><!--replace-start-3--><!--replace-start-6--><div class="ui text container" id="zettel-container" style="position: relative"><div class="zettel-view"><article class="ui raised attached segment zettel-content"><div class="pandoc"><h1 id="title-h1">Challenges Building an Open-Source E Ink Laptop</h1><p>In a previous article, I discussed my intention of <span class="zettel-link-container cf"><span class="zettel-link" title="2021-02-17T22:13"><a href="building-an-e-ink-laptop.html">Building an E-Ink Laptop</a></span></span>. In this article, I want to introduce <a href="https://discord.com/invite/nnxKnxh">EI2030</a> and how we are building an open-source eink laptop and its challenges.</p><p>This article wouldn’t be possible without the following contributors:</p><ul><li><a href="https://twitter.com/_initrd">@initrd</a></li><li><a href="https://twitter.com/Manuel_Zeiler">@Manuel_Zeiler</a></li><li><a href="https://twitter.com/zephray_wenting">@zephray_wenting</a></li><li><a href="https://twitter.com/xorlof">@xorlof</a></li><li><a href="https://twitter.com/AnjanKatta">@AnjanKatta</a></li><li><a href="https://twitter.com/tomcxphillips">@tom.cxphillips</a></li></ul><p>Thank you for your time, support and dedication.</p><h2 id="ei2030">EI2030</h2><a href="static/challenges-building-an-eink-laptop/ei2030.jpg" target="_blank" class="ui centered extralarge image">
+  <img src="static/challenges-building-an-eink-laptop/ei2030.jpg">
+</a>
+<br>
+<p>The <a href="https://forum.ei2030.org/">EI2030</a> community started about a year ago amidst the COVID-19 pandemic, the transition to remote-working, and the increasing amount of time we spend on our digital devices. The goal of EI2030 is to promote healthier computing practices, particularly the use of non-emissive displays such as e-ink and connecting people who are interested in learning and discussion, thereby facilitating the exchange of ideas and collaboration. Our community is open to everyone and consists of a broad mix of hardware hackers, health-tech enthusiasts, productivity hackers, gadget lovers, and entrepreneurs.</p><p>Recently at EI2030, we’ve launched our <a href="https://forum.ei2030.org/t/proposal-ei-2030-the-community-built-e-ink-laptop-project/">Community Built E-Ink Laptop Project.</a> The project’s objective is to build a proof of concept of an e-ink laptop, and as a community, we pool our resources, knowledge, and expertise. To achieve our objective, we are organized into working groups.</p><h2 id="working-groups">Working Groups</h2><p><a href="https://forum.ei2030.org/t/about-ei2030-working-groups/132">Working groups</a> focus on a specific objective related to building an eink laptop and are led by one or two people. The working groups are timeboxed and document their processes, and, as a result, share the resources, knowledge, and lessons learned for future groups.</p><p>Some of our current working groups are:</p><ul><li><a href="https://forum.ei2030.org/t/paperterm-project-definition-and-marketing-materials/146/5">PaperTerm</a></li></ul><a href="static/challenges-building-an-eink-laptop/paperterm.jpg" target="_blank" class="ui centered extralarge image">
+  <img src="static/challenges-building-an-eink-laptop/paperterm.jpg">
+</a>
+<br>
+<p>PaperTerm is a niche device with an e-paper-display and laptop form-factor device with a week of battery life (of regular use). PaperTerm is a microcontroller-based project used solely to connect to and run/interact with programs installed on remote computers (think along the lines of SSH/telnet, remote desktop, VNC, etc.). The combination of its limited scope and e-ink display is what will enable its vision of a “so long that I don’t have to think about it” battery life.</p><ul><li><a href="https://forum.ei2030.org/t/research-porting-linux-to-ultra-low-power-microcontroller/151/1">Low-Power E-Paper OS</a></li></ul><a href="static/challenges-building-an-eink-laptop/solar.jpg" target="_blank" class="ui centered extralarge image">
+  <img src="static/challenges-building-an-eink-laptop/solar.jpg">
+</a>
+<br>
+<p>The Low-power E-Paper OS objective is to explore the available RTOSes and develop a Linux port from scratch for the Ambiq Apollo 3 &amp; 4<span data-nosnippet=""><sup class="footnote-ref"><a href="#fn1" id="fnref1">1</a></sup></span> series processors or similar ultra low power microcontroller. The research from this group will support future/current working groups.</p><ul><li><a href="https://forum.ei2030.org/t/research-drivers-for-eink-displays/150">Drivers for E-ink displays</a></li></ul><div class="ui medium images centered"><a href="static/challenges-building-an-eink-laptop/sabre.jpg" target="_blank" class="ui centered image">
+  <img src="static/challenges-building-an-eink-laptop/sabre.jpg">
+</a>
+<a href="static/challenges-building-an-eink-laptop/imx8.jpg" target="_blank" class="ui centered image">
+  <img src="static/challenges-building-an-eink-laptop/imx8.jpg">
+</a>
+<br>
+</div><p>The Drivers for E-Ink display’s objective in the near term is to explore the different ways to drive an eink display, focusing on using a system on a chip with an integrated controller; i.MX7/8<span data-nosnippet=""><sup class="footnote-ref"><a href="#fn2" id="fnref2">2</a></sup></span> and RK3566<span data-nosnippet=""><sup class="footnote-ref"><a href="#fn3" id="fnref3">3</a></sup></span> family of microcontrollers. Evaluation kits and boards will be shared and distributed among group members. In the long-term, we are interested in building an open-source external electrophoretic display controller<span data-nosnippet=""><sup class="footnote-ref"><a href="#fn4" id="fnref4">4</a></sup></span> enabling higher performance processors and flexibility with the implementation of the waveforms with eink devices. The research from this group will support future/current working groups.</p><ul><li>Laptop Chassis</li></ul><div class="ui medium images centered"><a href="static/challenges-building-an-eink-laptop/cad.jpg" target="_blank" class="ui large centered image">
+  <img src="static/challenges-building-an-eink-laptop/cad.jpg">
+</a>
+<a href="static/challenges-building-an-eink-laptop/armbian.jpg" target="_blank" class="ui large centered image">
+  <img src="static/challenges-building-an-eink-laptop/armbian.jpg">
+</a>
+<br>
+</div><p>The objective of the group is to research, design, and create/remix a laptop chassis that can be the foundation for building an eink laptop and for current/future working groups. Preference will be for designs used with open-source software to enable the use of open-hardware—for example, Olimex TERES-I<span data-nosnippet=""><sup class="footnote-ref"><a href="#fn5" id="fnref5">5</a></sup></span>, VIA OpenBook<span data-nosnippet=""><sup class="footnote-ref"><a href="#fn6" id="fnref6">6</a></sup></span>, MNT Reform<span data-nosnippet=""><sup class="footnote-ref"><a href="#fn7" id="fnref7">7</a></sup></span>, and EOMA68<span data-nosnippet=""><sup class="footnote-ref"><a href="#fn8" id="fnref8">8</a></sup></span>.</p><ul><li><a href="https://forum.ei2030.org/t/working-group-definition-psychology-and-ux-of-e-ink/163/">Psychology and UX of e-ink</a></li></ul><div class="ui medium images centered"><a href="static/challenges-building-an-eink-laptop/psych-ux.jpg" target="_blank" class="ui medium centered image">
+  <img src="static/challenges-building-an-eink-laptop/psych-ux.jpg">
+</a>
+<a href="static/challenges-building-an-eink-laptop/prose.png" target="_blank" class="ui medium centered image">
+  <img src="static/challenges-building-an-eink-laptop/prose.png">
+</a>
+<br>
+</div><p>The objective of this group is to investigate possible psychological benefits of e-ink. Many eink users anecdotally report such benefits when compared with their experience of LCD, OLED, or other types of display. For example, lower levels of screen/eye fatigue. Previous published work has not been resoundingly conclusive (e.g. Benedetto et al., 2013<span data-nosnippet=""><sup class="footnote-ref"><a href="#fn9" id="fnref9">9</a></sup></span>; Benedetto et al., 2014<span data-nosnippet=""><sup class="footnote-ref"><a href="#fn10" id="fnref10">10</a></sup></span>; Siegenthaler et al., 2012<span data-nosnippet=""><sup class="footnote-ref"><a href="#fn11" id="fnref11">11</a></sup></span>).</p><p>We will investigate for ourselves whether these anecdotally reported benefits amount to empirically verifiable and generalisable properties of eink displays. We will also be ideating and investigating ways to design the UX of eink devices to improve things like productivity and well-being through psychology!</p><h2 id="challenges">Challenges</h2><p>From the day-to-day conversations with members from EI2030, research related to e-ink development, and the process of building an eink laptop, we’ve identified some challenges associated with building an eink laptop.</p><h3 id="sourcing-the-display">Sourcing the display</h3><div class="ui medium images centered"><a href="static/challenges-building-an-eink-laptop/eink-wiki.png" target="_blank" class="ui centered medium image">
+  <img src="static/challenges-building-an-eink-laptop/eink-wiki.png">
+</a>
+<a href="static/challenges-building-an-eink-laptop/des.jpg" target="_blank" class="ui centered medium image">
+  <img src="static/challenges-building-an-eink-laptop/des.jpg">
+</a>
+<br>
+</div><p>To build a laptop with an eink screen, the eink panels that we’ll consider fall in the range of 10.3 to 13.3inches. The eink panels that fit these criteria and are in production according to Panelook are the ES103TC11<span data-nosnippet=""><sup class="footnote-ref"><a href="#fn12" id="fnref12">12</a></sup></span>, ED133UT22<span data-nosnippet=""><sup class="footnote-ref"><a href="#fn13" id="fnref13">13</a></sup></span>, and the ES133TT33:<span data-nosnippet=""><sup class="footnote-ref"><a href="#fn14" id="fnref14">14</a></sup></span>. Dasung<span data-nosnippet=""><sup class="footnote-ref"><a href="#fn15" id="fnref15">15</a></sup></span>, Waveshare<span data-nosnippet=""><sup class="footnote-ref"><a href="#fn16" id="fnref16">16</a></sup></span>, Sony<span data-nosnippet=""><sup class="footnote-ref"><a href="#fn17" id="fnref17">17</a></sup></span>, and other companies’ product lines use the panels listed.</p><p>We can use the panels present on existing eink devices, second-hand markets, wholesale in bulk, or other distributors to build a proof of concept. Afterward, it will be difficult at scale to fulfill the minimum order quantity. According to conversations I’ve had, the minimum order quantity(MOQ) required for purchase at one time is between 10,000 to 50,000.<span data-nosnippet=""><sup class="footnote-ref"><a href="#fn18" id="fnref18">18</a></sup></span></p><p>Given the challenges stated above, another option is not to use E Ink but rather a different non-emissive display technology such as Display Electronic Slurry (DES)<span data-nosnippet=""><sup class="footnote-ref"><a href="#fn19" id="fnref19">19</a></sup></span> or Reflective Liquid Crystal Display (RLCD)<span data-nosnippet=""><sup class="footnote-ref"><a href="#fn20" id="fnref20">20</a></sup></span>.</p><p>DES is used in the displays offered by Good Display. Some of the notable features of using a DES display are an improved: pixel structure, contrast, resolution, operating temperature, power consumption, and cost. Additionally, an MOQ is not required.</p><p>RLCDs<span data-nosnippet=""><sup class="footnote-ref"><a href="#fn21" id="fnref21">21</a></sup></span> are an alternative reflective display technology that is attractive as they are cheaper than eink, don’t require unique waveforms/firmware/controllers, have week-long battery life, and most excitingly, can do 60fps! Sharp from Japan is the leading maker of RLCDs today, BOE as well. RLCDs are the displays that are in your microwave, oven, &amp; TI calculator. But they also were the displays in your Gameboy &amp; Pebble Watch<span data-nosnippet=""><sup class="footnote-ref"><a href="#fn22" id="fnref22">22</a></sup></span>. And if you have a Garmin smartwatch today, it likely has an RLCD with a backlight - ‘a transflective RLCD’.</p><p>Transflective RLCDs came to fame with the One Laptop per Child project<span data-nosnippet=""><sup class="footnote-ref"><a href="#fn23" id="fnref23">23</a></sup></span>, Pixel Qi tech,<span data-nosnippet=""><sup class="footnote-ref"><a href="#fn24" id="fnref24">24</a></sup></span> &amp; now can be found in a variety of smartwatches. However, there is currently no mass market high-resolution tablet/monitor-sized transflective RLCDs. The main benefit of transflective is outdoor visibility, this is useful in outdoor smartwatches, but it is hard to understand the need for this in tablets &amp; monitors’.</p><p>This chicken &amp; egg problem of perceived lack of application &amp; demand and thus lack of suppliers producing such displays is how in 2021 we still don’t have available a technology that is multiple decades old. However, the advent of ‘eye comfort’ to describe displays that don’t cause eye strain in China, in many ways pioneered by Hisense, has created a niche &amp; a quantifiable market opportunity for transflective RLCDs to fulfill.</p><p>There is still the bootstrapping problem of creating enough demand to satisfy a manufacturer’s ‘MOQ’ (minimum order quantity) such that they will actually produce such displays. If enough of us get together &amp; show interest, there may be a way to solve this chicken &amp; egg problem by getting a manufacturer to bite in making tablet/monitor-sized RLCDs or another non-emissive display.</p><h3 id="interface-to-an-e-ink-display">Interface to an E Ink display</h3><a href="static/challenges-building-an-eink-laptop/components.png" target="_blank" class="ui centered large image">
+  <img src="static/challenges-building-an-eink-laptop/components.png">
+</a>
+<br>
+<p>Let’s assume that we can attain an eink panel either directly from E Ink or a second-hand marketplace; how would we drive the eink display? Wenting Zhang’s post, Basics of driving E-paper displays<span data-nosnippet=""><sup class="footnote-ref"><a href="#fn25" id="fnref25">25</a></sup></span> provides a detailed account of its components and ways to drive the screens.</p><p>There are three ways to drive an eink display:</p><ul><li>Using a dedicated controller chip to drive the screen.</li><li>Using a System on a Chip(SoC)<span data-nosnippet=""><sup class="footnote-ref"><a href="#fn26" id="fnref26">26</a></sup></span> that has an integrated controller.</li><li>Using a fast microcontroller unit to emulate the controller with GPIO.</li></ul><p>Zhang provides some examples:</p><ul><li>Closed-source / Commercial: EPSON S1D13xxx<span data-nosnippet=""><sup class="footnote-ref"><a href="#fn27" id="fnref27">27</a></sup></span>, IT8951<span data-nosnippet=""><sup class="footnote-ref"><a href="#fn28" id="fnref28">28</a></sup></span>, Waveshare HDMI driver board<span data-nosnippet=""><sup class="footnote-ref"><a href="#fn16" id="fnref16">16</a></sup></span>, Dasung E-ink monitors<span data-nosnippet=""><sup class="footnote-ref"><a href="#fn15" id="fnref15">15</a></sup></span>.</li><li>SoC with integrated controller: RK29xx<span data-nosnippet=""><sup class="footnote-ref"><a href="#fn29" id="fnref29">29</a></sup></span>, RK3026<span data-nosnippet=""><sup class="footnote-ref"><a href="#fn30" id="fnref30">30</a></sup></span>/RK3028<span data-nosnippet=""><sup class="footnote-ref"><a href="#fn31" id="fnref31">31</a></sup></span>, i.MX 6S/D, i.MX 7S/D<span data-nosnippet=""><sup class="footnote-ref"><a href="#fn2" id="fnref2">2</a></sup></span>,i.MX 8ULP<span data-nosnippet=""><sup class="footnote-ref"><a href="#fn32" id="fnref32">32</a></sup></span>, RK3566/RK3568<span data-nosnippet=""><sup class="footnote-ref"><a href="#fn3" id="fnref3">3</a></sup></span></li><li>MCU + Software TCON: essentialscrap<span data-nosnippet=""><sup class="footnote-ref"><a href="#fn33" id="fnref33">33</a></sup></span>, NekoCal<span data-nosnippet=""><sup class="footnote-ref"><a href="#fn34" id="fnref34">34</a></sup></span>, InkPlate 6/10<span data-nosnippet=""><sup class="footnote-ref"><a href="#fn35" id="fnref35">35</a></sup></span>, EPDiy<span data-nosnippet=""><sup class="footnote-ref"><a href="#fn36" id="fnref36">36</a></sup></span></li></ul><p>The <a href="https://forum.ei2030.org/t/research-drivers-for-eink-displays/">Drivers for E-Ink group</a> will be exploring the use of i.MX7/8, RK3566 SoC’s and building an open-source external electrophoretic display controller(EPDC)<span data-nosnippet=""><sup class="footnote-ref"><a href="#fn4" id="fnref4">4</a></sup></span> enabling the use of higher performance processors and open-source waveforms.</p><p>The waveform<span data-nosnippet=""><sup class="footnote-ref"><a href="#fn37" id="fnref37">37</a></sup></span> is a look-up table that the controller uses to determine how to drive the screen. There are two types of waveforms: vendor waveforms and open-source waveforms. The vendor waveforms cannot be distributed and are not easily obtainable because NDAs protect them. On the other hand, open-source waveforms can be created by a community and used in open-source projects. However, open-source waveforms have limited performance, are missing some critical features, and are not compatible with vendor waveforms.</p><p>Building an open-source external EPDC would enable people to source an eink panel of their choosing and drive them. We can create a database<span data-nosnippet=""><sup class="footnote-ref"><a href="#fn38" id="fnref38">38</a></sup></span> of eink panels that are used on eink devices and create compatible open-source waveforms. This database would serve as a reference for people to use when buying from a second-hand marketplace.</p><h3 id="the-laptop-chasis">The Laptop Chasis</h3><div class="ui medium images centered"><a href="static/challenges-building-an-eink-laptop/olimex.jpg" target="_blank" class="ui medium centered image">
+  <img src="static/challenges-building-an-eink-laptop/olimex.jpg">
+</a>
+<a href="static/challenges-building-an-eink-laptop/teres-internal.jpg" target="_blank" class="ui medium centered image">
+  <img src="static/challenges-building-an-eink-laptop/teres-internal.jpg">
+</a>
+<br>
+</div><p>The laptop chassis is also another major consideration to think about when building an eink laptop. The aspect ratio, for example, found in the 10.3 and 13.3 screens is 4:3<span data-nosnippet=""><sup class="footnote-ref"><a href="#fn14" id="fnref14">14</a></sup></span>. Most companies have for some time now moved on to using 16:9 as the default for their screen. I’m unaware of an original design manufacturer<span data-nosnippet=""><sup class="footnote-ref"><a href="#fn39" id="fnref39">39</a></sup></span> that makes a laptop chassis for a 4:3 aspect ratio, to the best of my knowledge. Where do we go from here?</p><p>We could create the laptop from scratch, but what about exploring existing open-source design and hardware? One of the earliest examples is the VIA OpenBook<span data-nosnippet=""><sup class="footnote-ref"><a href="#fn6" id="fnref6">6</a></sup></span>, a laptop reference design revealed in 2008 that made their design files open source <span data-nosnippet=""><sup class="footnote-ref"><a href="#fn40" id="fnref40">40</a></sup></span>. Some other options are the MNT Reform<span data-nosnippet=""><sup class="footnote-ref"><a href="#fn7" id="fnref7">7</a></sup></span> and the EOMA68<span data-nosnippet=""><sup class="footnote-ref"><a href="#fn8" id="fnref8">8</a></sup></span> that have also made their design files open and available for others.</p><p>I’ve recently have come across the Olimex TERES-1<span data-nosnippet=""><sup class="footnote-ref"><a href="#fn41" id="fnref41">41</a></sup></span> an open-hardware and open-source laptop<span data-nosnippet=""><sup class="footnote-ref"><a href="#fn5" id="fnref5">5</a></sup></span>. Some of the interesting features about this laptop are that it’s split into five parts rather than having a motherboard constructed as one piece<span data-nosnippet=""><sup class="footnote-ref"><a href="#fn42" id="fnref42">42</a></sup></span>. The design files are freely available and produced in KiCAD. While an ODM made the case, a member from the community created a case for it in FreeCAD.<span data-nosnippet=""><sup class="footnote-ref"><a href="#fn43" id="fnref43">43</a></sup></span></p><p>Spare parts for the TERES-I are available on the Olimex website. Since the design files for the case and its PCBs are available, it is a strong candidate to build an open-source eink laptop. In addition to the above, we can contribute to the Olimex open-source ecosystem by creating an open-source EPDC expansion board and modifying the chassis to be fitted with an eink panel.</p><h2 id="next-steps">Next Steps</h2><p>In this article, I introduced EI2030, our working groups, and the challenges with building an open-source eink laptop: sourcing the eink displays, interfacing with the display, and creating the laptop chassis.</p><p>Our next steps to create a prototype of an open-source eink laptop are:</p><ul><li>Create space for community members to provide feedback, suggestions and ask questions.</li><li>Development on the open-source EPDC.</li><li>Work on the laptop chassis.</li><li>Embedded Linux development.</li><li>Perform a UX/UI Study.</li></ul><h2 id="an-invitation">An Invitation</h2><p>If any of the work we are doing piqued your interest, we invite you to join our:</p><ul><li><a href="https://discord.com/invite/nnxKnxh">Discord</a></li><li><a href="https://forum.ei2030.org/categories">Forum</a></li><li><a href="https://alexsoto.dev/office-hours.html">Book time</a> during my office hours to talk further.</li></ul><p>Our team is looking for folks with experience in:</p><ul><li>Embedded Linux development</li><li>Mechanical engineering / CAD</li></ul><p>We are open to everyone joining, regardless of your skillset, and I believe we all have something to contribute to the community we are building and shaping together.</p><h2 id="about">About</h2><p><img class="ui left floated small image" id="avatar" src="static/profile.jpeg" /></p><p>Hi, I’m Alexander Soto.</p><p>I’m a community organizer, educator, software engineer, hacktivist, and agent of social change. My interests are in exploring community-building, social justice, education, and leveraging technology to address social problems.</p><p>In the past, I’ve worked as a labor rights organizer, a teacher, and I’m currently the Project Lead at <a href="https://ei2030.org/">EI2030</a>, and an Expert In Residence at <a href="https://www.resilientcoders.org/">Resilient Coders</a>.</p><p>I enjoy tinkering/playing/breaking things, 3D printing, painting, playing piano, swimming, and writing in my spare time.</p><p>This site is the <a href="https://alexsoto.dev/impulse.html">scattered and unfinished version of my thoughts</a> while documenting what I’m currently learning and exploring.</p><p>If you’d like to know the updates of a post, have questions, comments, suggestions, or would like to collaborate, send me a <a href="https://twitter.com/messages/compose?recipient_id=4648173315">direct message</a> on <a href="https://twitter.com/alexsotodev">Twitter</a>, or an <a href="mailto:contact@alexsoto.dev">email</a> and we can talk.</p><section id="subscriptionLinks"></section>
+<div class="ui section divider"></div>
+<section id="socialMediaLinks"></section>
+<div class="ui section divider"></div>
+<div id="commento"></div>
+<h2 id="links">Links</h2><div id="footnotes"><ol><li id="fn1"><p><a href="https://www.ambiq.top/en/mcu-1/apollo4">https://www.ambiq.top/en/mcu-1/apollo4</a></p><a href="#fnref1">↩︎</a></li><li id="fn2"><p><a href="https://www.nxp.com/products/processors-and-microcontrollers/arm-processors/i-mx-applications-processors/i-mx-7-processors/i-mx-7dual-processors-heterogeneous-processing-with-dual-arm-cortex-a7-and-cortex-m4-cores:i.MX7D">https://www.nxp.com/products/processors-and-microcontrollers/arm-processors/i-mx-applications-processors/i-mx-7-processors/i-mx-7dual-processors-heterogeneous-processing-with-dual-arm-cortex-a7-and-cortex-m4-cores:i.MX7D</a></p><a href="#fnref2">↩︎</a></li><li id="fn3"><p><a href="https://en.wikipedia.org/wiki/Rockchip#RK3566">https://en.wikipedia.org/wiki/Rockchip#RK3566</a></p><a href="#fnref3">↩︎</a></li><li id="fn4"><p><a href="https://www.nxp.com/docs/en/reference-manual/IMX_REFERENCE_MANUAL.pdf#_OPENTOPIC_TOC_PROCESSING_d3992e25494">https://www.nxp.com/docs/en/reference-manual/IMX_REFERENCE_MANUAL.pdf#_OPENTOPIC_TOC_PROCESSING_d3992e25494</a></p><a href="#fnref4">↩︎</a></li><li id="fn5"><p><a href="https://github.com/OLIMEX/DIY-LAPTOP">https://github.com/OLIMEX/DIY-LAPTOP</a></p><a href="#fnref5">↩︎</a></li><li id="fn6"><p><a href="https://en.wikipedia.org/wiki/VIA_OpenBook">https://en.wikipedia.org/wiki/VIA_OpenBook</a></p><a href="#fnref6">↩︎</a></li><li id="fn7"><p><a href="https://github.com/mntmn/reform/tree/993da6ed54774787c1fed0e5b50724f2a10e39ef">https://github.com/mntmn/reform/tree/993da6ed54774787c1fed0e5b50724f2a10e39ef</a></p><a href="#fnref7">↩︎</a></li><li id="fn8"><p><a href="https://www.crowdsupply.com/eoma68/micro-desktop">https://www.crowdsupply.com/eoma68/micro-desktop</a></p><a href="#fnref8">↩︎</a></li><li id="fn9"><p><a href="https://pubmed.ncbi.nlm.nih.gov/24386252/">https://pubmed.ncbi.nlm.nih.gov/24386252/</a></p><a href="#fnref9">↩︎</a></li><li id="fn10"><p><a href="https://www.sciencedirect.com/science/article/abs/pii/S0747563214004750">https://www.sciencedirect.com/science/article/abs/pii/S0747563214004750</a></p><a href="#fnref10">↩︎</a></li><li id="fn11"><p><a href="https://bop.unibe.ch/JEMR/article/view/2338">https://bop.unibe.ch/JEMR/article/view/2338</a></p><a href="#fnref11">↩︎</a></li><li id="fn12"><p><a href="https://www.panelook.com/ES103TC1_E%20Ink_10.3_EPD_overview_34953.html">https://www.panelook.com/ES103TC1_E%20Ink_10.3_EPD_overview_34953.html</a></p><a href="#fnref12">↩︎</a></li><li id="fn13"><p><a href="https://www.panelook.com/ED133UT2_E%20Ink_13.3_EPD_overview_31868.html">https://www.panelook.com/ED133UT2_E%20Ink_13.3_EPD_overview_31868.html</a></p><a href="#fnref13">↩︎</a></li><li id="fn14"><p><a href="https://www.panelook.com/ES133TT3_E%20Ink_13.3_EPD_overview_31869.html">https://www.panelook.com/ES133TT3_E%20Ink_13.3_EPD_overview_31869.html</a></p><a href="#fnref14">↩︎</a></li><li id="fn15"><p><a href="https://dasung-tech.myshopify.com/">https://dasung-tech.myshopify.com/</a></p><a href="#fnref15">↩︎</a></li><li id="fn16"><p><a href="https://www.waveshare.com/product/raspberry-pi/displays/e-paper.htm">https://www.waveshare.com/product/raspberry-pi/displays/e-paper.htm</a></p><a href="#fnref16">↩︎</a></li><li id="fn17"><p><a href="https://www.sony.com/electronics/digital-paper-systems/t/digital-paper-notepad">https://www.sony.com/electronics/digital-paper-systems/t/digital-paper-notepad</a></p><a href="#fnref17">↩︎</a></li><li id="fn18"><p>I will update this number once I get confirmation from E Ink</p><a href="#fnref18">↩︎</a></li><li id="fn19"><p><a href="https://www.good-display.com/companyfile/20.html">https://www.good-display.com/companyfile/20.html</a></p><a href="#fnref19">↩︎</a></li><li id="fn20"><p><a href="https://patents.google.com/patent/US6693689B1/en">https://patents.google.com/patent/US6693689B1/en</a></p><a href="#fnref20">↩︎</a></li><li id="fn21"><p><a href="https://www.crystalfontz.com/blog/glossary/reflective-lcd/">https://www.crystalfontz.com/blog/glossary/reflective-lcd/</a></p><a href="#fnref21">↩︎</a></li><li id="fn22"><p><a href="https://en.wikipedia.org/wiki/Pebble_(watch)">https://en.wikipedia.org/wiki/Pebble_(watch)</a></p><a href="#fnref22">↩︎</a></li><li id="fn23"><p><a href="https://en.wikipedia.org/wiki/One_Laptop_per_Child">https://en.wikipedia.org/wiki/One_Laptop_per_Child</a></p><a href="#fnref23">↩︎</a></li><li id="fn24"><p><a href="https://en.wikipedia.org/wiki/Pixel_Qi">https://en.wikipedia.org/wiki/Pixel_Qi</a></p><a href="#fnref24">↩︎</a></li><li id="fn25"><p><a href="https://hackaday.io/project/11537-nekocal-an-e-ink-calendar/log/191001-basics-of-driving-e-paper-displays">https://hackaday.io/project/11537-nekocal-an-e-ink-calendar/log/191001-basics-of-driving-e-paper-displays</a></p><a href="#fnref25">↩︎</a></li><li id="fn26"><p><a href="https://en.wikipedia.org/wiki/System_on_a_chip">https://en.wikipedia.org/wiki/System_on_a_chip</a></p><a href="#fnref26">↩︎</a></li><li id="fn27"><p><a href="https://vdc.epson.com/display-controllers/mdc/s1d13c00">https://vdc.epson.com/display-controllers/mdc/s1d13c00</a></p><a href="#fnref27">↩︎</a></li><li id="fn28"><p><a href="http://www.ite.com.tw/en/product/view?mid=95">http://www.ite.com.tw/en/product/view?mid=95</a></p><a href="#fnref28">↩︎</a></li><li id="fn29"><p><a href="http://armdevices.net/2011/01/07/rockchip-presents-rk2818-and-rk29xx-series-processors-at-ces-2011/">http://armdevices.net/2011/01/07/rockchip-presents-rk2818-and-rk29xx-series-processors-at-ces-2011/</a></p><a href="#fnref29">↩︎</a></li><li id="fn30"><p><a href="https://www.rock-chips.com/a/en/products/RK30_Series/2013/0731/371.html">https://www.rock-chips.com/a/en/products/RK30_Series/2013/0731/371.html</a></p><a href="#fnref30">↩︎</a></li><li id="fn31"><p><a href="https://www.cnx-software.com/2014/03/04/37-gk328-android-mini-pc-powered-by-dual-core-rockchip-rk3028-processor/">https://www.cnx-software.com/2014/03/04/37-gk328-android-mini-pc-powered-by-dual-core-rockchip-rk3028-processor/</a></p><a href="#fnref31">↩︎</a></li><li id="fn32"><p><a href="https://www.nxp.com/products/processors-and-microcontrollers/arm-processors/i-mx-applications-processors/i-mx-8-processors/i-mx-8ulp-applications-processor-family:i.MX8ULP">https://www.nxp.com/products/processors-and-microcontrollers/arm-processors/i-mx-applications-processors/i-mx-8-processors/i-mx-8ulp-applications-processor-family:i.MX8ULP</a></p><a href="#fnref32">↩︎</a></li><li id="fn33"><p><a href="http://essentialscrap.com/eink/">http://essentialscrap.com/eink/</a></p><a href="#fnref33">↩︎</a></li><li id="fn34"><p><a href="https://hackaday.io/project/11537-nekocal-an-e-ink-calendar">https://hackaday.io/project/11537-nekocal-an-e-ink-calendar</a></p><a href="#fnref34">↩︎</a></li><li id="fn35"><p><a href="https://inkplate.io/">https://inkplate.io/</a></p><a href="#fnref35">↩︎</a></li><li id="fn36"><p><a href="https://github.com/vroland/epdiy">https://github.com/vroland/epdiy</a></p><a href="#fnref36">↩︎</a></li><li id="fn37"><p><a href="https://patents.google.com/patent/US20170168370A1/en?q=~patent%2fUS5961804A&amp;page=3">https://patents.google.com/patent/US20170168370A1/en?q=~patent%2fUS5961804A&amp;page=3</a></p><a href="#fnref37">↩︎</a></li><li id="fn38"><p><a href="https://github.com/EI2030/eink-panels-db">https://github.com/EI2030/eink-panels-db</a></p><a href="#fnref38">↩︎</a></li><li id="fn39"><p><a href="https://en.wikipedia.org/wiki/Original_design_manufacturer">https://en.wikipedia.org/wiki/Original_design_manufacturer</a></p><a href="#fnref39">↩︎</a></li><li id="fn40"><p><a href="https://gitlab.com/power-progress-community/oshw-powerpc-notebook/open-laptop-chassis/-/tree/master/via_openbook_scaled_to_15inch">https://gitlab.com/power-progress-community/oshw-powerpc-notebook/open-laptop-chassis/-/tree/master/via_openbook_scaled_to_15inch</a></p><a href="#fnref40">↩︎</a></li><li id="fn41"><p><a href="https://www.olimex.com/Products/DIY-Laptop/KITS/TERES-A64-BLACK/open-source-hardware">https://www.olimex.com/Products/DIY-Laptop/KITS/TERES-A64-BLACK/open-source-hardware</a></p><a href="#fnref41">↩︎</a></li><li id="fn42"><p><a href="https://github.com/OLIMEX/DIY-LAPTOP/blob/rel3/doc/web/hw_assembly.md">https://github.com/OLIMEX/DIY-LAPTOP/blob/rel3/doc/web/hw_assembly.md</a></p><a href="#fnref42">↩︎</a></li><li id="fn43"><p><a href="https://code.forksand.com/forksand/olimex-teres-case">https://code.forksand.com/forksand/olimex-teres-case</a></p><a href="#fnref43">↩︎</a></li></ol></div></div><div class="metadata"><div class="date" title="Zettel date"><time datetime="2021-04-22T12:00">2021-04-22</time></div></div></article><nav class="ui attached segment deemphasized bottomPane" id="neuron-tags-pane"><div><span class="ui basic label zettel-tag" title="Tag">blog</span><span class="ui basic label zettel-tag" title="Tag">e-ink</span><span class="ui basic label zettel-tag" title="Tag">root</span></div></nav><nav class="ui bottom attached icon compact inverted menu black" id="neuron-nav-bar"><!--replace-start-9--><a class="item" href="." title="Home"><i class="home icon"></i></a><!--replace-end-9--><a class="right item" href="impulse.html" title="Open Impulse"><i class="wave square icon"></i></a></nav></div></div><!--replace-end-6--><!--replace-end-3--><!--replace-end-2--><div class="ui center aligned container footer-version"><div class="ui tiny image"><a href="https://neuron.zettel.page"><img alt="logo" src="https://raw.githubusercontent.com/srid/neuron/master/assets/neuron.svg" title="Generated by Neuron 1.9.24.1" /></a></div></div></div></body></html>
